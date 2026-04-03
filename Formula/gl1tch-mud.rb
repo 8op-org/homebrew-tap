@@ -1,16 +1,16 @@
 class Gl1tchMud < Formula
   desc "gl1tch MUD game world engine"
   homepage "https://github.com/adam-stokes/gl1tch-mud"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/adam-stokes/gl1tch-mud/releases/download/v0.1.0/gl1tch-mud_v0.1.0_darwin_arm64.tar.gz"
-      sha256 "fefd32c60cf986c9b601b744e28acd3a78e6db4b59abbbfba1d9b21471115f65"
+      url "https://github.com/adam-stokes/gl1tch-mud/releases/download/v0.2.0/gl1tch-mud_0.2.0_darwin_arm64.tar.gz"
+      sha256 "940866d556328d501875a998921a5bb4bd7b4e41baff6797a03966a1af86fcb2"
     else
-      url "https://github.com/adam-stokes/gl1tch-mud/releases/download/v0.1.0/gl1tch-mud_v0.1.0_darwin_arm64.tar.gz"
-      sha256 "fefd32c60cf986c9b601b744e28acd3a78e6db4b59abbbfba1d9b21471115f65"
+      url "https://github.com/adam-stokes/gl1tch-mud/releases/download/v0.2.0/gl1tch-mud_0.2.0_darwin_amd64.tar.gz"
+      sha256 "9e632500788f94f294f9762243db22b798ae8cc0e90165977e447612e06214a9"
     end
   end
 
