@@ -11,7 +11,7 @@ class Glitch < Formula
   on_macos do
     if Hardware::CPU.intel?
       url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_darwin_amd64.tar.gz"
-      sha256 "688b97a7e142e3e24fd5a4ddd7cf1556e398c8be58d68517a644600f35ded654"
+      sha256 "d714e82aaf0479d2204b51291facd72b95c0d6baeb68a94b1909ae110783757f"
 
       define_method(:install) do
         bin.install "glitch"
@@ -19,7 +19,7 @@ class Glitch < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_darwin_arm64.tar.gz"
-      sha256 "061dcd110c682d5de23dc0769c1bcdac18a0cdd107e635c5724c427b74e90212"
+      sha256 "babd92af30881f565ec9a5896bfdff6d1a9e7a926d5dba1f50bd2b763691e962"
 
       define_method(:install) do
         bin.install "glitch"
@@ -30,14 +30,14 @@ class Glitch < Formula
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_linux_amd64.tar.gz"
-      sha256 "2d5aa3dca064aed1798dc0e597e075fd7edfc50adf4eb9ef7c9db7685416406d"
+      sha256 "adf837024aa0c2a49c8983301b7f1b3b990e0400d08df94f711b81f1da3f7f9a"
       define_method(:install) do
         bin.install "glitch"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_linux_arm64.tar.gz"
-      sha256 "98edbcd800c21c1522fa2e8cbd85dea1ee8c978285b44e85d22970791807e739"
+      sha256 "2c2ccee984c06aad8c703e8f88ce8f1c5c0a010ca680525738db374366ca1ef8"
       define_method(:install) do
         bin.install "glitch"
       end
