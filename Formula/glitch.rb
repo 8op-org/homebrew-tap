@@ -5,43 +5,91 @@
 class Glitch < Formula
   desc "gl1tch — AI-native terminal task manager"
   homepage "https://github.com/8op-org/gl1tch"
-  version "0.4.0"
+  version "0.5.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_darwin_amd64.tar.gz"
-      sha256 "d714e82aaf0479d2204b51291facd72b95c0d6baeb68a94b1909ae110783757f"
+      url "https://github.com/8op-org/gl1tch/releases/download/v0.5.0/glitch_0.5.0_darwin_amd64.tar.gz"
+      sha256 "c83bcc1bf758f16ff1a8c7467fcad25c42009f52a3189951985395450f77dcad"
 
       define_method(:install) do
         bin.install "glitch"
+        bin.install "glitch-ollama"
+        bin.install "glitch-claude"
+        bin.install "glitch-opencode"
+        bin.install "glitch-codex"
+        bin.install "glitch-gemini"
+        bin.install "glitch-github-copilot"
+        (etc/"glitch/wrappers").mkpath
+        Dir["wrappers/*.yaml"].each { |f| (etc/"glitch/wrappers").install f }
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_darwin_arm64.tar.gz"
-      sha256 "babd92af30881f565ec9a5896bfdff6d1a9e7a926d5dba1f50bd2b763691e962"
+      url "https://github.com/8op-org/gl1tch/releases/download/v0.5.0/glitch_0.5.0_darwin_arm64.tar.gz"
+      sha256 "d4be08ff3ddb75d61d06f754296618725ee1685ed8dce0225e3f0e8e686b10b0"
 
       define_method(:install) do
         bin.install "glitch"
+        bin.install "glitch-ollama"
+        bin.install "glitch-claude"
+        bin.install "glitch-opencode"
+        bin.install "glitch-codex"
+        bin.install "glitch-gemini"
+        bin.install "glitch-github-copilot"
+        (etc/"glitch/wrappers").mkpath
+        Dir["wrappers/*.yaml"].each { |f| (etc/"glitch/wrappers").install f }
       end
     end
   end
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_linux_amd64.tar.gz"
-      sha256 "adf837024aa0c2a49c8983301b7f1b3b990e0400d08df94f711b81f1da3f7f9a"
+      url "https://github.com/8op-org/gl1tch/releases/download/v0.5.0/glitch_0.5.0_linux_amd64.tar.gz"
+      sha256 "9c1e861f5710a9fed8441c2423d2d7bf483b9e4ae628717617bbc420d4140941"
       define_method(:install) do
         bin.install "glitch"
+        bin.install "glitch-ollama"
+        bin.install "glitch-claude"
+        bin.install "glitch-opencode"
+        bin.install "glitch-codex"
+        bin.install "glitch-gemini"
+        bin.install "glitch-github-copilot"
+        (etc/"glitch/wrappers").mkpath
+        Dir["wrappers/*.yaml"].each { |f| (etc/"glitch/wrappers").install f }
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0_linux_arm64.tar.gz"
-      sha256 "2c2ccee984c06aad8c703e8f88ce8f1c5c0a010ca680525738db374366ca1ef8"
+      url "https://github.com/8op-org/gl1tch/releases/download/v0.5.0/glitch_0.5.0_linux_arm64.tar.gz"
+      sha256 "bcf2d6abfcfb8730cd3856747f2682c003157f83cae90c9a3944c4e741fb801b"
       define_method(:install) do
         bin.install "glitch"
+        bin.install "glitch-ollama"
+        bin.install "glitch-claude"
+        bin.install "glitch-opencode"
+        bin.install "glitch-codex"
+        bin.install "glitch-gemini"
+        bin.install "glitch-github-copilot"
+        (etc/"glitch/wrappers").mkpath
+        Dir["wrappers/*.yaml"].each { |f| (etc/"glitch/wrappers").install f }
       end
     end
+  end
+
+  def post_install
+    wrappers_dst = "#{Dir.home}/.config/glitch/wrappers"
+    system "mkdir", "-p", wrappers_dst
+    Dir["#{etc}/glitch/wrappers/*.yaml"].each do |f|
+      dst = "#{wrappers_dst}/#{File.basename(f)}"
+      FileUtils.cp(f, dst) unless File.exist?(dst)
+    end
+  end
+
+  def caveats
+    <<~EOS
+      Run the following to finish setup:
+        glitch config init
+    EOS
   end
 
   test do
