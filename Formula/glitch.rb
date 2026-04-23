@@ -2,27 +2,31 @@ class Glitch < Formula
   desc "gl1tch workflow engine"
   homepage "https://8op.org"
   license "MIT"
-  version "0.3.0"
+  version "0.4.0"
 
   depends_on "babashka"
 
-  on_macos do
-    url "https://github.com/8op-org/gl1tch/releases/download/v0.3.0/glitch_0.3.0_darwin_arm64.tar.gz"
-    sha256 "fe493878b3d32ddf28ea8f7b8804dd3d8a7963d2afb8393dfa3cd311be885f8c"
-  end
-
-  on_linux do
-    if Hardware::CPU.arm?
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.3.0/glitch_0.3.0_linux_arm64.tar.gz"
-      sha256 "654c98189443599180dfa6438de2c45f89ac43e8cfaa5129db23f0e77aa0b909"
-    else
-      url "https://github.com/8op-org/gl1tch/releases/download/v0.3.0/glitch_0.3.0_linux_amd64.tar.gz"
-      sha256 "654c98189443599180dfa6438de2c45f89ac43e8cfaa5129db23f0e77aa0b909"
-    end
-  end
+  url "https://github.com/8op-org/gl1tch/releases/download/v0.4.0/glitch_0.4.0.tar.gz"
+  sha256 "83c0b4ff41cd67cbf45b55aa2081bbc61f95a0aa6c8f9c3a92d9ad4c09c93994"
 
   def install
-    bin.install "glitch"
+    mkdir_p share/"glitch/src/glitch"
+    cp_r Dir["src/glitch/*"], share/"glitch/src/glitch/"
+    (share/"glitch/providers").install Dir["providers/*.clj"]
+    (share/"glitch").install "ast-grep-rules"
+
+    (bin/"glitch").write <<~SH
+      #!/bin/bash
+      exec bb -cp "#{share}/glitch/src" -m glitch.main "$@"
+    SH
+  end
+
+  def post_install
+    provider_dir = etc/"glitch/providers"
+    provider_dir.mkpath
+    (share/"glitch/providers").each_child do |f|
+      provider_dir.install_symlink f unless (provider_dir/f.basename).exist?
+    end
   end
 
   test do
